@@ -1,27 +1,25 @@
-
-#html路径
-html_dir:	\
-
-#图片资源后缀
-img_ext:	.jpg|.gif|.png|.jpeg|.ico
-#图片资源下载目录
-img_dir:	\theme\images
-
-#css资源后缀
-css_ext:	.css|.less
-#css资源下载目录
-css_dir:	\theme\css
-
-#Js资源后缀
-js_ext:		.js
-#js资源下载目录
-js_dir:		\theme\js
-
-#其他资源后缀
-other_ext:	.dll
-#其他资源下载目录
-other_dir:	\theme\other
-
 #生成目录
 destDir:	F:\kuaipan\Projects\webcopyer\template
 
+#html文件的存储路径（相对于destDir,`\`即等于destDir）
+html_dir:	\
+
+#图片资源后缀
+img_ext:	.jpg|.gif|.png|.jpeg|.ico|.JPG|.GIF|.PNG|.JPEG|.ICO
+#图片资源下载目录（相对于destDir）
+img_dir:	\theme\images
+
+#css资源后缀
+css_ext:	.css|.less|.CSS|.LESS
+#css资源下载目录（相对于destDir）
+css_dir:	\theme\css
+
+#Js资源后缀
+js_ext:		.js|.JS
+#js资源下载目录（相对于destDir）
+js_dir:		\theme\js
+
+#其他资源后缀
+other_ext:	.dll|.DLL
+#其他资源下载目录
+other_dir:	\theme\other

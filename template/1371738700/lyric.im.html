@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html xml:lang="en-US" lang="en-US">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  
+  <title>Lyric.im</title>
+  <link href='http://fonts.googleapis.com/css?family=Abel' rel='stylesheet' type='text/css'>
+
+  
+  <meta name="author" content="Lyric Wai">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="Lyric.im"/>
+
+  <link rel="alternate" href="/atom.xml" title="Lyric.im" type="application/atom+xml">
+  <!--[if lt IE 9]><script src="theme/js/html5.js"></script><![endif]-->
+  <link rel="stylesheet" href="theme/css/style.css" type="text/css" media="screen" /> 
+  <link rel="shortcut icon" type="image/png" href="theme/images/favico.ico" />    
+  <script type="text/javascript" src="theme/js/jquery.js"></script>
+  <script type="text/javascript" src="theme/js/main.js"></script>
+  
+</head>
+
+
+<body>
+  <div id="header">
+    <div id="nav_wrapper">
+        <div id="nav">
+            <div class="inner">
+                <h1 id="title"><a href="/">Lyric.im</a></h1>
+                <div id="description" class="seal"></div>
+                <ul class="right">
+                    
+                    <li><a href="/">Home</a></li>
+                    <li class="dot">&bull;</a>
+                    
+                    <li><a href="/about">About</a></li>
+                    <li class="dot">&bull;</a>
+                    
+                    <li><a href="/tags/tech">Tech</a></li>
+                    <li class="dot">&bull;</a>
+                    <li><a href="/tags/english">English</a></li>
+                    <li class="dot">&bull;</a>
+                    <li><a href="/tags/paint">Artworks</a></li>
+                    <li class="dot">&bull;</a>
+                    <li><a href="/tags/linux">Linux</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="header_inner">
+        <div id="social">
+            <a href="http://twitter.com/ilrcat" target="_blank" title="Follow Me @ Twitter"><img src="theme/images/ic16_twitter.png"></a>
+            <a href="http://github.com/lyricat" target="_blank" title="Fork Me @ Github"><img src="theme/images/ic16_github.png"></a>
+            <a href="http://lyric.im/feed" target="_blank" title="Subscribe My Blog"><img src="theme/images/ic16_rss.png"></a>
+        </div>
+        <div id="search">
+  <form action="http://google.com/search" method="get" accept-charset="utf-8">
+    <input type="text" name="q" results="0" class="search_box" placeholder="Search">
+    <input type="hidden" name="q" value="site:lyric.im">
+  </form>
+</div>
+        <div class="sep"></div>
+    </div>
+</div>
+
+  
+
+<div id="articles">
+
+    <div class="article">
+  <div class="inner">
+    
+  
+    <h2 class="article_title title"><a href="/what-is-chrome-os/">Chrome OS 是什么</a></h2>
+  
+
+    <div class="article_meta">
+      
+      <span>by</span>
+      Lyric Wai
+      <span>on</span> May 18 2013
+      <span>with</span>
+      <a href="/what-is-chrome-os/#comments">Comments</a>
+    </div>
+    <div class="text">
+      
+        <p>上周有用户向我反应，他们已经在 Chrome Web Store 中发现了测试中的 Hotot 3。然后我才发现，Google 已经开始在 Web Store 中上线 new Packaged App了。只不过只在 Chrome Dev Channel for Windows 和 Chrome OS 中是可见的。</p>
+<p>在新版的 Web Store 中，所有的之前的被称为网站快捷方式 Chrome App 都被移到了 「Website」 这一标签下（1.0 版的 Hotot 也被移到这里），而 「App」 标签下仅包含 new packaged app。</p>
+<p>这个现象表达了 Google 的态度，我想也就是他们的战略，即 Chrome 是未来。长期在 Chrome 的生态中开发，我之前已经多次对 Chrome 表达了赞美之情，人们最初认为 Chrome OS 是一个没了网络就啥都不能干的系统的看法是完全错误的。我想说的是 Chrome OS 实际上是一个增强版的 iOS，在诸多方面，Chrome/Chrome OS 都与名声赫然的 iOS 有很高的相似之处，本质上，new Package App 就是 Chrome/Chrome OS 上的 Native App。当然，作为一个「增强版 iOS」，Chrome OS 拥有一些在 iOS 上被翘首企盼但是还没有的特性。</p>
+<p>考虑到 Chrome OS 和 Chrome 浏览器的一致性，下文如未特殊说明，统一用 Chrome 指代 Chrome 浏览器和 Chrome OS，用 App 指代 iOS 中的 App 和 Chrome 的 new Packaged App</p>
+<h3>一致的 App 范式</h3>
+<p>在 iOS 中，每个 App 都运行与独立的沙盒中，App 的数据不得直接进行交互，也没有全局的文件系统访问能力。在 Chrome 中也有类似的机制。下图分别描述了在 iOS 上的 App 和 Chrome 上的 App 与网络服务交互的方式。</p>
+<p><img src="theme/images/what-is-chrome-os-01.png" alt="compare to iOS and chrome"></p>
+<p>可以看出，Chrome 中 fileSystem 和 storage.local 相当于 iOS 中 App 的沙盒文件系统；syncFileSystem 和 storage.sync 则负责同步到 Google Cloud （也就是 Google Drive），与 iCloud 类似。</p>
+<p>在这个模式上，Chrome 值得一提，即只要在 Chrome 中登录过账户，那么所有使用 syncFileSystem 和 storage.sync API 的 App 数据都会无缝地同步到 Google Drive，而无需额外授权。</p>
+<h3>两者有类似的通知机制</h3>
+<p>在 iOS 中，由于 App 没有后台运行的能力，因此需要 App Notification Push 来接收更新。而在 Chrome 中也有类似的能力，那就是 Google Cloud Messaging。GCM 不但提供 Android 设备的通知，也提供 Chrome 设备的通知。</p>
+<h3>一个折衷的后台进程</h3>
+<p>准确地说，Chrome 中没有 Daemon。取而代之的是 <a href="http://developer.chrome.com/trunk/apps/app_lifecycle.html">event page</a>。这是一个基于事件的 App 控制方式。官方希望通过 API 引导开发者去保存 App 的状态，而不是一个持续运作的后台进程。</p>
+<h3>更好的进程间通讯机制</h3>
+<p>iOS 的进程间通讯机制一直被开发者诟病，需要将 URI 硬编码到 App 中才能实现那么一丁点交互能力，更别提各个 App 分开授权对体验的破坏了。</p>
+<p>在 Chrome 中则有一套消息机制，这套消息机制可以作用于 App 内部，也可以作用于整个 Chrome，用于多个 App 之间的通讯。</p>
+<h3>最后</h3>
+<p>作为新一代 OS，Chrome OS 没有 OS X 和 Windows 在设计上所背负的历史包袱，因此可以有机会像 iOS 一样轻装前行。我很高兴看到 Chrome 走在正确的道路上。</p>
+
+      
+    </div>
+    <div class="big_sep"></div>
+    <div class="article_meta">
+      <span>tagged:</span>
+      
+  
+  <a class="tag" href="/tags/chrome/">chrome</a>, <a class="tag" href="/tags/review/">review</a>, <a class="tag" href="/tags/tech/">tech</a>
+
+    </div>
+    
+  </div> <!-- .inner -->
+</div>  <!-- .article -->
+
+
+    <div class="sep"></div>
+
+    <div class="article">
+  <div class="inner">
+    
+  
+    <h2 class="article_title title"><a href="/best-practice-for-web-app-development/">当前 Web App 开发的最佳实践</a></h2>
+  
+
+    <div class="article_meta">
+      
+      <span>by</span>
+      Lyric Wai
+      <span>on</span> Apr 27 2013
+      <span>with</span>
+      <a href="/best-practice-for-web-app-development/#comments">Comments</a>
+    </div>
+    <div class="text">
+      
+        <p>前段时间 <a href="http://forecast.io">forecast.io</a> 家的 App 挺火挺热（请用 iPhone Safari 打开链接 <a href="http://forecast.io"><a href="http://forecast.io">http://forecast.io</a></a>，然后添加到桌面看看效果 ）。接着官方博客释出了一篇<a href="http://blog.forecast.io/its-not-a-web-app-its-an-app-you-install-from-the-web/">文章</a>，可以认为是当前 Mobile Web App 开发的最佳实践，我先总结一下：</p>
+<ol>
+<li>不要刻意模仿 iOS 的默认样式和交互。毕竟是 Web App，肯定会有模仿不到位的地方，这样会很快露出马脚；用自己的风格和交互则不会有这样的问题，没有参照物也就不容易察觉错误，容易糊弄过去。</li>
+<li>不要做得像个网站。</li>
+<li>只用硬件加速的 CSS 3 属性做动画效果。说白了，只使用 translate3d 系属性，而且使用 transition 时也不可以应用到没有硬件加速的属性上。</li>
+<li>不要自己实现滚动条。使用 <code>-webkit-overflow-scrolling: touch</code> 而不是采用类似 <a href="http://cubiq.org/iscroll">iScroll</a> 这样的东西。</li>
+<li>Web 技术上还做不好的事情就别JB做。</li>
+<li>用 FastClick 和 AppCache 提升用户体验。</li>
+<li>吃自己狗粮。</li>
+</ol>
+<p>看到第 3 点没？其实现在做 Web App 门槛挺高，应付奇葩的 Javascript 实现所导致奇葩范式还算好，关键在于面对这么一坨从 Web 诞生至今延续下来的开发环境。换言之，假如现在微软释出一套大一统 SDK，包含从 MS DOS 到 .Net 4 的所有 API，会好学到哭么。奇迹，但是 W3C 做到了。</p>
+<p>另外在 Chrome Dev Tools 里打开 <code>Show paint rectangles</code> 和 <code>Show composited layer borders</code> 选项就能直观地看到浏览器是怎么渲染你的 Web App 的。对于观察硬件加速的优化效果来说很有帮助。</p>
+<p>言归正传，对于第 4 点，可能对 Mobile Web App 更适用。桌面 Web App 使用大数据的动态列表还是用 <a href="http://cubiq.org/iscroll">iScroll</a> 这样的实现吧，效果比原生滚动强不是一点半点。</p>
+<p>接下来几点是我总结的，面向基于 <a href="http://angularjs.org">Angular.js</a> 框架的大型 Web App 的优化实践，不过我想某些点对别的框架也适用。</p>
+<ol>
+<li>不要写…大型… Web App …（有气无力）</li>
+<li>Model 的观察者要小要短.</li>
+<li>高频事件（例如 WebSocket ）的回调函数中需要对 View 进行修改的，用 throttle 控制事件频度。</li>
+<li>一个页面中不要超过 2000 条 Angular 表达式。</li>
+<li>Angular.js 使用 dirty check 实现数据绑定，因此在 digest cycle 中尽量减少深度比较，仅仅包含会导致 View 变化的操作。</li>
+<li>除非万不得已，不要操作 DOM。</li>
+<li>局部性原理：操作 DOM 的语句尽可能连续地放在一起。</li>
+<li>多条语句连续地操作 DOM 时，用 setTimeout 分割它们可以得到明显效果。</li>
+<li>不要滥用 setTimeout。</li>
+<li>程序很慢，但是人类更慢。除非有明显的性能问题，否则不要过度优化（例如使用以上优化方式），只会搞得更糟。</li>
+</ol>
+<p>不过话说回来，总算看到了 Web App 的一线曙光，其诸多优势让人没法忽视。所以先从 Hybrid App 开始吧。别说你讨厌 Hybrid App，其实它早就潜入我们身旁你都不一定感觉得到。例如 Tweetbot（最初的 OS X 版），SpeedTao 还有 …… 微信。其实吧，说不喜欢的，只不过是技术性偏执罢了。</p>
+
+      
+    </div>
+    <div class="big_sep"></div>
+    <div class="article_meta">
+      <span>tagged:</span>
+      
+  
+  <a class="tag" href="/tags/tech/">tech</a>
+
+    </div>
+    
+  </div> <!-- .inner -->
+</div>  <!-- .article -->
+
+
+    <div class="sep"></div>
+
+    <div class="article">
+  <div class="inner">
+    
+  
+    <h2 class="article_title title"><a href="/some-jibes-about-diagramming-software/">对绘图工具的吐槽</a></h2>
+  
+
+    <div class="article_meta">
+      
+      <span>by</span>
+      Lyric Wai
+      <span>on</span> Apr 22 2013
+      <span>with</span>
+      <a href="/some-jibes-about-diagramming-software/#comments">Comments</a>
+    </div>
+    <div class="text">
+      
+        <p>经过在叽喳上的简单调研，做 PRD 的各种图时，除了海量的 Axure 派系，还有 PPT 派系、 Keynote 派系、OmniGraffle 派系、Photoshop 派系、Fireworks 派系、Balsamiq 派系、Evolus Pencil 派系、基本靠代码派系、基本靠纸折派系、基本靠手画派系等海量的各类派系。</p>
+<p>不过很难理解啊，作为一个致力于创造更好的产品的职业，居然有那么多从业者依赖 Axure 这样既难用又丑陋的行业软件，这是一种很不科学的现象……似乎大部分的PM都是坚忍的PM，因为他们都喜爱这款与「易用」两字完全不沾边的 Axure。</p>
+<p>但是<a href="https://twitter.com/soulhacker">Neo</a>老师安慰我说：</p>
+<blockquote>
+<p>@ilrcat 我觉得对产品有美学追求的人都忍不了那货…</p>
+</blockquote>
+<p>于是我释然了。</p>
+<p>OmniGraffle 我觉得特遗憾，因为如果伊能像 Axure 那样导出所有 canvas，并且能自动处理事件，我会很爱它的。话说回来，目前所有的绘图工具，其连线操作的便捷性没有一个能比得上 <a href="http://www.yworks.com/en/products_yed_about.html">yEd</a> 的，是我的习惯太变态么。</p>
+
+      
+    </div>
+    <div class="big_sep"></div>
+    <div class="article_meta">
+      <span>tagged:</span>
+      
+  
+  <a class="tag" href="/tags/大吐槽/">大吐槽</a>
+
+    </div>
+    
+  </div> <!-- .inner -->
+</div>  <!-- .article -->
+
+
+    <div class="sep"></div>
+
+    <div class="article">
+  <div class="inner">
+    
+  
+    <h2 class="article_title title"><a href="/yabou-of-google-replace-webkit-with-blink/">Chromium 用 Blink引擎 代替 Webkit</a></h2>
+  
+
+    <div class="article_meta">
+      
+      <span>by</span>
+      Lyric Wai
+      <span>on</span> Apr 4 2013
+      <span>with</span>
+      <a href="/yabou-of-google-replace-webkit-with-blink/#comments">Comments</a>
+    </div>
+    <div class="text">
+      
+        <p>被评论说文章写得太技术看不懂，今天先说非技术部分。</p>
+<p>首先，对用户的影响：</p>
+<ul>
+<li>这一改进主要在技术层次上，会使得Chrome和Chromium更高更快更强。</li>
+<li>Google以后会拿出一整套和微软直接抗衡的解决方案。</li>
+</ul>
+<p>看，非技术的部分两句话说完了，也就是整个分析的结论。作为一个风水师，我发现通过技术变迁来给产品的战略看风水也是蛮有趣的。</p>
+<p>然后是技术部分，换引擎的理由倒是很显然：</p>
+<ul>
+<li>因为Webkit性能不够</li>
+<li>因为不适合Chromium/Chrome的多进程架构</li>
+<li>清晰的codebase有利于以后Chromium的发展</li>
+</ul>
+<p>对生态圈的影响：</p>
+<ul>
+<li>Google的目标就是让Web更快。<ol>
+<li>最初是觉得浏览器都太烂于是坑了Mozilla，出了Chrome</li>
+<li>其次是觉得Javascript的VM太慢，所以出了V8引擎</li>
+<li>然后觉得V8还是不给力啊，本质上还是Javascript太渣了，搞个Dart语言看看；</li>
+<li>之后Google发现好像是ISP跟不上我们的脚步了，于是<a href="https://fiber.google.com/about/">开始给用户铺光纤</a></li>
+<li>觉得HTTP太低效了于是推出SPDY…</li>
+<li>实验性的Chrome OS和Chromebook</li>
+<li>攻击性很强的<a href="http://lyric.im/more-about-new-chrome-packaged-apps/">新Chrome App API</a>发布</li>
+<li>再到今天的Blink代替Webkit</li>
+</ol>
+</li>
+<li>总之就是要让网速不是障碍，让网络服务速度不是障碍，最后让Web App速度赶上本地App，然后就可以正面开战了。</li>
+<li>所有这一切都被称为「Google的野望」，大概描述了一个屌丝青年Google：先小敲小打地重新做轮子，大家都觉得伊是个大好人；然后放一块儿就构建自己的生态系统；最后在眼皮底下干翻以微软为首的老一辈革命家的全景。</li>
+<li>嗯，在攻击性很强的new Chrome App API的加持下，Web App能做的事情已经非常多，类似一个本地程序了，大家快来一改现在Chrome App渣一样的局面。</li>
+</ul>
+<p>对开发者的影响：</p>
+<ul>
+<li>对Angular.js这样的JS框架是利好消息，对所有的Web App来说也是利好消息，因为目前对新引擎的野望中，有3项的改进会让DOM操作变得更快，并且明确说明会重写整个webkit的DOM实现。考虑到现在DOM操作速度如此之慢，已经是Web App发展的瓶颈了，Google拿它开刀是理所当然。<ol>
+<li>提升DOM 3 Event和UI Event的性能</li>
+<li>解决目前Webkit对DOM的向后兼容性所导致的性能问题</li>
+<li>DOM移到Javascript heap</li>
+</ol>
+</li>
+<li>对前端工程师来说不需要太担心，<ol>
+<li>Blink fork 自 Webkit，以后也会兼容已经成为标准的-webkit-*私有特性。</li>
+<li>Chromium 团队渐进性更新很靠谱。</li>
+<li>考虑到Google的操性，如果要往Chromium/Chrome加私货，一定会加到Chrome App和Chrome extension里；如果实在要往通用web里加，一定会先折腾成标准或者至少是标准草案，然后自己先拿出实现来；因此不会形成IE里的ActiveX那种东西。</li>
+</ol>
+</li>
+</ul>
+
+      
+    </div>
+    <div class="big_sep"></div>
+    <div class="article_meta">
+      <span>tagged:</span>
+      
+  
+  <a class="tag" href="/tags/google/">google</a>, <a class="tag" href="/tags/tech/">tech</a>, <a class="tag" href="/tags/remove/">remove</a>
+
+    </div>
+    
+  </div> <!-- .inner -->
+</div>  <!-- .article -->
+
+
+    <div class="sep"></div>
+
+    <div class="article">
+  <div class="inner">
+    
+  
+    <h2 class="article_title title"><a href="/individualism-on-internet/">互联网个人主义</a></h2>
+  
+
+    <div class="article_meta">
+      
+      <span>by</span>
+      Lyric Wai
+      <span>on</span> Mar 14 2013
+      <span>with</span>
+      <a href="/individualism-on-internet/#comments">Comments</a>
+    </div>
+    <div class="text">
+      
+        <p>大约在6年前离开了博客托管商，开始建设独立博客。初衷之一是我认为有必要对自己写的文章保持控制力，而不能寄期望于任何BSP。</p>
+<p>去年因为Cache（Cash）的缘故，我用 <a href="https://github.com/lyricat/tattoo">Tattoo</a> 代替 Wordpress 。初衷之一是我认为有必要对自己文章的评论保持控制力，而不能寄期望于Disqus（现在看来是过于苛刻了）</p>
+<p>今天JB Google <a href="http://googlereader.blogspot.jp/2013/03/powering-down-google-reader.html">宣布了自家 Reader 的死期</a> 再一次印证了我的看法：任何时候都应该假设单一在线服务是不可靠的。当然，这与技术无关，只要将服务交与了某个服务提供商，就意味着正在失去对他们的控制力。</p>
+<p>虽然是机器学习与个性化推荐的支持者，但是在我最关心的事物上，我坚持要最 old-fashioned 的方式去做。因为这是唯一能够让我保持控制力的方式。</p>
+<p>像 RMS 那样苦行僧般地活着我做不到也不会去做，像 Linux 那样的桌面我也不会有太多机会去用，但是并不代表他们就不重要。相反，他们很重要，他们的存在本身就是底线。只有支持他们，当我想从某个团体中收回控制时，才有选择的权力。</p>
+<p>虽说<a href="http://sunng.info/blog/2012/12/%E8%9E%BA%E6%97%8B%E5%8F%91%E5%B1%95%E7%9A%84%E6%8A%80%E6%9C%AF/">技术总是螺旋式发展的</a>嘛，但是毕竟再也回不到过去，享受了现代科技创造的问题的解决方案的人类，欲望总是那么多。这也是为什么我会看好 <a href="http://nimbusbase.com">NimbusBase</a> 这样的基础设施，为什么我不喜欢App.net，为什么我希望有开放的Social networking service标准，也许世界应该换种方式回到之前的面貌才对。</p>
+<p>对了，自从 AdSense 不做 Feed Ad 业务，到今天 Reader 已将死，看样子 Google 已经不玩 old-fashioned 的 web feed 生态圈了，那我也废除掉 Feedburner 。如果读者你还在使用订阅器，有劳换用 <a href="http://lyric.im/feed"><a href="http://lyric.im/feed">http://lyric.im/feed</a></a> 这个原始 feed 地址，原地址只工作至 Feedburner 被砍的那天。</p>
+
+      
+    </div>
+    <div class="big_sep"></div>
+    <div class="article_meta">
+      <span>tagged:</span>
+      
+  
+  <a class="tag" href="/tags/life/">life</a>, <a class="tag" href="/tags/tech/">tech</a>
+
+    </div>
+    
+  </div> <!-- .inner -->
+</div>  <!-- .article -->
+
+
+    <div class="sep"></div>
+
+</div>
+
+
+
+  <div id="footer_wrapper">
+<div id="footer">
+    <div id="footer_inner">
+        <div class="archives col">
+            <h2>Archives</h2>
+            <ul>
+                <li><a href="/archives/2013/">2013</a></li>
+                <li><a href="/archives/2012/">2012</a></li>
+                <li><a href="/archives/2011/">2011</a></li>
+                <li><a href="/archives/2010/">2010</a></li>
+                <li><a href="/archives/2008/">2008</a></li>
+            </ul>
+        </div>
+        <div class="tag_cloud col">
+            
+<h2>Tag Cloud</h2>
+  
+    <a class="tag" href="/tags/life/">life(23)</a>
+  
+    <a class="tag" href="/tags/review/">review(20)</a>
+  
+    <a class="tag" href="/tags/paint/">paint(19)</a>
+  
+    <a class="tag" href="/tags/tech/">tech(27)</a>
+  
+    <a class="tag" href="/tags/hotot/">hotot(9)</a>
+  
+    <a class="tag" href="/tags/security/">security(3)</a>
+  
+    <a class="tag" href="/tags/career/">career(5)</a>
+  
+    <a class="tag" href="/tags/history/">history(1)</a>
+  
+    <a class="tag" href="/tags/dream/">dream(6)</a>
+  
+    <a class="tag" href="/tags/linux/">linux(10)</a>
+  
+    <a class="tag" href="/tags/大吐槽/">大吐槽(4)</a>
+  
+    <a class="tag" href="/tags/how-to/">how-to(5)</a>
+  
+    <a class="tag" href="/tags/cook/">cook(1)</a>
+  
+    <a class="tag" href="/tags/english/">english(5)</a>
+  
+    <a class="tag" href="/tags/osx/">osx(3)</a>
+  
+    <a class="tag" href="/tags/chrome/">chrome(1)</a>
+  
+    <a class="tag" href="/tags/google/">google(1)</a>
+  
+    <a class="tag" href="/tags/remove/">remove(1)</a>
+  
+
+        </div>
+        <div class="links col">
+            <h2>Links</h2>
+            <ul>
+                <li><a href="http://hotot.org">Project Hotot</a></li>
+                <li><a href="https://github.com/lyricat">My Github repos</a></li>
+                <li><a href="http://dribbble.com/lyricat">My Dribbble</a></li>
+                <li><a href="https://twitter.com/ilrcat">My Twitter</a></li>
+            </ul>
+        </div>
+        <div class="copyright">
+            2005 - 2013
+            © Lyric Wai, All rights reserved.
+            <span>&bull;</span> 
+            Powered by <a href="http://zespia.tw/hexo/">HEXO</a>
+            <span>&bull;</span> 
+            SealScript Theme by <a href="http://lyric.im">Lyric Wai</a>
+        </div>
+    </div>
+</div>
+</div>
+
+<script>
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-4178606-8']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+  <nav id="pagination">
+    
+    
+        <a id="next" href="/page/2/" class="v_nav">
+            <span class="icon">Next</span>
+        </a>
+    
+</nav>
+</body>
+</html>
