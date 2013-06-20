@@ -53,6 +53,8 @@ var (
 	method string
 	arg1   string
 	arg2   string
+
+	ext string
 )
 
 func init() {
@@ -61,6 +63,7 @@ func init() {
 	arg1 = flag.Arg(1)
 	arg2 = flag.Arg(2)
 
+	log.SetFlags(log.Ltime)
 	//或取配置文件
 
 	cfg := Configure(configFile)
@@ -89,7 +92,7 @@ func init() {
 
 func main() {
 
-	// fmt.Println(getDestDirAndFiletype("http://www.chinaz.com/"))
+	// fmt.Println(get_destdir_and_filetype("http://www.chinaz.com/"))
 
 	//getAll("http://drizzlep.diandian.com/", "")        //获取在线模版
 	//getAll("F:\\kuaipan\\Projects\\webcopyer\\template\\index.html", "http://drizzlep.diandian.com/page/2/") //获取本地模版
@@ -141,6 +144,7 @@ func main() {
 
 func getAll(file string, url string) {
 	var html string
+	ext = "html"
 	if strings.HasPrefix(file, "http") || strings.HasPrefix(file, "https") {
 		html = http_get(file)
 		current_url = file
@@ -164,21 +168,27 @@ func getAll(file string, url string) {
 			fmt.Println(write_erro)
 		}
 	}
+
+	log.Println("Done !!")
 }
 
 func getHtml(url string) {
+	ext = "html"
 	html := http_get(url)
 	current_url = url
 	html = extruct_html_resource(html)
 	ioutil.WriteFile(destDir+html_dir+get_true_filename(url), []byte(html), 0777) //转储css
+	log.Println("Done !!")
 }
 
 func getCss(url string) {
+	ext = "css"
 	css := http_get(url)
 	current_url = url
 	css = extruct_css_resource(css) //1、改引用路径 2、下载资源
 	dest := getDestDir("css")
 	ioutil.WriteFile(destDir+dest+get_true_filename(url), []byte(css), 0777) //转储css
+	log.Println("Done !!")
 }
 
 //==============================================
@@ -211,7 +221,7 @@ func append_import_css_resource(str string) string {
 //@import.*url\s*(\(.*\));
 func css_change_path(str string, old_path string) string {
 
-	dir, filetype := getDestDirAndFiletype(old_path)
+	dir, filetype := get_destdir_and_filetype(old_path)
 	if dir != "unexcept" {
 		down_resource(old_path, dir)
 		true_filename := get_true_filename(old_path)
@@ -266,7 +276,7 @@ func html_change_path_4(str string) string {
 }
 
 func html_change_path(str string, old_path string) string {
-	dir, filetype := getDestDirAndFiletype(old_path)
+	dir, filetype := get_destdir_and_filetype(old_path)
 	if dir != "unexcept" {
 		down_resource(old_path, dir)
 		if filetype == "css" {
@@ -290,7 +300,7 @@ func html_css_change_path(str string) string {
 
 func _html_css_change_path(str string, old_path string) string {
 
-	dir, filetype := getDestDirAndFiletype(old_path)
+	dir, filetype := get_destdir_and_filetype(old_path)
 	if dir != "unexcept" {
 		down_resource(old_path, dir)
 		true_filename := get_true_filename(old_path)
@@ -328,14 +338,19 @@ func get_true_filename(url string) string {
 	true_filename := strings.Split(filename, "?")[0]
 
 	if len(true_filename) > 0 {
-		fmt.Println("未知类型文件：" + url)
+		if !(url == arg1 || url == method || url == arg2) {
+			log.Println("发现未知类型文件：" + url)
+			log.Println()
+		} else {
+			true_filename = true_filename + "." + ext
+		}
 		return true_filename
 	}
 
 	return filename
 }
 
-func getDestDirAndFiletype(url string) (string, string) {
+func get_destdir_and_filetype(url string) (string, string) {
 	filetype := ""
 	dir := destDir
 
@@ -356,19 +371,18 @@ func getDestDirAndFiletype(url string) (string, string) {
 }
 
 func down_resource(url string, destDir string) {
-
+	url = strings.Trim(url, " \t\n\r")
 	filename := get_true_filename(url)
 	fullfilename := destDir + filename
-	fmt.Println(url)
 	fixed_url := fix_url(url) //矫正url（相对路径转换为绝对路径）
 
-	fmt.Println(fullfilename)
-	fmt.Println(fixed_url)
+	log.Println("FROM: " + fixed_url)
+	log.Println("TO:   " + fullfilename)
+	fmt.Println()
 
 	if strings.HasPrefix(fixed_url, "http") || strings.HasPrefix(fixed_url, "https") {
 
 		resp, err := http.Get(fixed_url)
-		// resp, err := http.Get("http://a.36krcnd.com/photo/9b6493956db5cc890654a6b21bb2d77e.gif")
 		if err != nil {
 			fmt.Println(err)
 			os.Exit(0)
@@ -379,7 +393,6 @@ func down_resource(url string, destDir string) {
 			fmt.Println(create_err)
 			os.Exit(0)
 		}
-		// out, _ := os.Create("F:\\kuaipan\\templateCopyer\\template\\images\\9b6493956db5cc890654a6b21bb2d77e.gif")
 		defer out.Close()
 
 		defer resp.Body.Close()
@@ -389,7 +402,6 @@ func down_resource(url string, destDir string) {
 			os.Exit(0)
 		}
 		out.Close()
-		//return filetype + "/" + filename
 	}
 }
 
