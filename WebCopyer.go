@@ -41,14 +41,15 @@ var (
 	js_ext    []string
 	other_ext []string
 
-	html_dir  string
-	img_dir   string
-	css_dir   string
-	js_dir    string
-	other_dir string
-
+	html_dir   string
+	img_dir    string
+	css_dir    string
+	js_dir     string
+	other_dir  string
+	configFile *string
+	help       *bool
+	version    *bool
 	extArray   []string
-	configFile = *flag.String("config", "config", "配置文件路径")
 
 	method string
 	arg1   string
@@ -58,7 +59,45 @@ var (
 )
 
 func init() {
+
+	configFile = flag.String("config", "config", "配置文件路径")
+	help = flag.Bool("help", false, "查看帮助")
+	version = flag.Bool("version", false, "show version")
+
 	flag.Parse()
+	if *help {
+		fmt.Println()
+		fmt.Println("复制模板：")
+		fmt.Println("    webcopyer http://lyric.im/")
+		fmt.Println("    webcopyer get http://lyric.im/")
+		fmt.Println()
+		fmt.Println("拷贝本地模板：")
+		fmt.Println("    webcopyer getLocal F:\\template\\index.html  http://drizzlep.diandian.com/")
+		fmt.Println()
+		fmt.Println("拷贝html及其直接关联资源模板：")
+		fmt.Println("    webcopyer getHtml http://lyric.im/")
+		fmt.Println()
+		fmt.Println("拷贝css及其直接关联资源模板：")
+		fmt.Println("    webcopyer getCss http://lyric.im/styles/style.css")
+		fmt.Println()
+		fmt.Println("关于：")
+		fmt.Println("    version： 1.0")
+		fmt.Println("    author：  肖立群")
+		fmt.Println("    email：   xlqstar@gmail.com")
+		fmt.Println("    repo：    https://github.com/xlqstar/WebCopyer.git")
+		fmt.Println()
+		os.Exit(0)
+	}
+	if *version {
+		fmt.Println()
+		fmt.Println("关于：")
+		fmt.Println("    version： 1.0")
+		fmt.Println("    author：  肖立群")
+		fmt.Println("    email：   xlqstar@gmail.com")
+		fmt.Println("    repo：    https://github.com/xlqstar/WebCopyer.git")
+		fmt.Println()
+		os.Exit(0)
+	}
 	method = flag.Arg(0)
 	arg1 = flag.Arg(1)
 	arg2 = flag.Arg(2)
@@ -66,7 +105,7 @@ func init() {
 	log.SetFlags(log.Ltime)
 	//或取配置文件
 
-	cfg := Configure(configFile)
+	cfg := Configure(*configFile)
 
 	destDir = cfg.getStr("destDir")
 
