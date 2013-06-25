@@ -195,10 +195,9 @@ func getAll(file string, url string) {
 
 	html = extruct_html_resource(html)
 	ioutil.WriteFile(destDir+html_dir+get_true_filename(current_url), []byte(html), 0777) //转储html
-	// fmt.Println(css_resource_list)
 	for k := range css_resource_list {
+		current_url_tmp := current_url
 		current_url = fix_url(css_resource_list[k])
-		//getCss(current_url)
 		css := http_get(current_url)
 		css = extruct_css_resource(css) //1、改引用路径 2、下载资源
 		dest := getDestDir("css")
@@ -206,6 +205,7 @@ func getAll(file string, url string) {
 		if write_erro != nil {
 			fmt.Println(write_erro)
 		}
+		current_url = current_url_tmp
 	}
 
 	log.Println("Done !!")
@@ -410,6 +410,7 @@ func get_destdir_and_filetype(url string) (string, string) {
 }
 
 func down_resource(url string, destDir string) {
+
 	url = strings.Trim(url, " \t\n\r")
 	filename := get_true_filename(url)
 	fullfilename := destDir + filename
@@ -417,10 +418,8 @@ func down_resource(url string, destDir string) {
 
 	log.Println("FROM: " + fixed_url)
 	log.Println("TO:   " + fullfilename)
-	fmt.Println()
 
 	if strings.HasPrefix(fixed_url, "http") || strings.HasPrefix(fixed_url, "https") {
-
 		resp, err := http.Get(fixed_url)
 		if err != nil {
 			fmt.Println(err)
@@ -432,16 +431,15 @@ func down_resource(url string, destDir string) {
 			fmt.Println(create_err)
 			os.Exit(0)
 		}
-		defer out.Close()
-
-		defer resp.Body.Close()
 		_, copy_err := io.Copy(out, resp.Body)
 		if copy_err != nil {
 			fmt.Println(copy_err)
 			os.Exit(0)
 		}
 		out.Close()
+		resp.Body.Close()
 	}
+	fmt.Println()
 }
 
 func in_array(v string, array []string) bool {
@@ -459,8 +457,10 @@ func fix_url(url string) string {
 	re1, _ := regexp.Compile("http[s]?://[^/]+")
 	destrooturl := re1.FindString(current_url)
 
-	//当url为：/wahaha/xiaoxixi/tupian.png
-	if strings.HasPrefix(url, "/") {
+	//当url为：//wahaha/xiaoxixi/tupian.png
+	if strings.HasPrefix(url, "//") {
+		url = "http:" + url
+	} else if strings.HasPrefix(url, "/") {
 		// re1,_ := regexp.Compile("http[s]?://[^/]+")
 		// destrooturl := re1.FindString(current_url)
 		url = destrooturl + url
