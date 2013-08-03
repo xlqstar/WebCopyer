@@ -6,6 +6,7 @@ import (
 	"io"
 	"io/ioutil"
 	"log"
+	"net"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -351,10 +352,25 @@ func _html_css_change_path(str string, old_path string) string {
 
 }
 
+var timeout = time.Duration(2 * time.Second)
+
+func dialTimeout(network, addr string) (net.Conn, error) {
+	return net.DialTimeout(network, addr, timeout)
+}
+
 //======================================
 
 func http_get(url string) string {
-	res, err := http.Get(url)
+
+	transport := http.Transport{
+		Dial: dialTimeout,
+	}
+
+	client := http.Client{
+		Transport: &transport,
+	}
+
+	res, err := client.Get(url)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(0)
@@ -409,6 +425,15 @@ func get_destdir_and_filetype(url string) (string, string) {
 	return dir, filetype
 }
 
+func Try(fun func(), handler func(interface{})) {
+	defer func() {
+		if err := recover(); err != nil {
+			handler(err)
+		}
+	}()
+	fun()
+}
+
 func down_resource(url string, destDir string) {
 
 	url = strings.Trim(url, " \t\n\r")
@@ -419,11 +444,21 @@ func down_resource(url string, destDir string) {
 	log.Println("FROM: " + fixed_url)
 	log.Println("TO:   " + fullfilename)
 
+	transport := http.Transport{
+		Dial: dialTimeout,
+	}
+
+	client := http.Client{
+		Transport: &transport,
+	}
+
 	if strings.HasPrefix(fixed_url, "http") || strings.HasPrefix(fixed_url, "https") {
-		resp, err := http.Get(fixed_url)
+
+		resp, err := client.Get(fixed_url)
 		if err != nil {
-			fmt.Println(err)
-			os.Exit(0)
+			print("got err !")
+			// os.Exit(0)
+			return
 		}
 
 		out, create_err := os.Create(fullfilename)
