@@ -12,7 +12,7 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
-	"time"
+//	"time"
 )
 
 /*
@@ -102,6 +102,13 @@ func init() {
 	arg1 = flag.Arg(1)
 	arg2 = flag.Arg(2)
 
+	url := flag.Arg(0)
+	if method ==  "getLocal" {
+		url = flag.Arg(2)
+	}
+	if method ==  "get" {
+		url = flag.Arg(1)
+	}
 	log.SetFlags(log.Ltime)
 	//或取配置文件
 
@@ -125,7 +132,7 @@ func init() {
 	extArray = arrayMerge(extArray, js_ext)
 	extArray = arrayMerge(extArray, other_ext)
 
-	destDir = checkAndMkDir(destDir)
+	destDir = checkAndMkDir(destDir,url)
 
 }
 
@@ -539,7 +546,7 @@ func arrayMerge(old []string, other []string) []string {
 	return old
 }
 
-func checkAndMkDir(destDir string) string {
+func checkAndMkDir(destDir string,url string) string {
 	//判断destDir是否存在 不存在的话创建 失败的话报错终止
 	if !exist(destDir) {
 		err := os.Mkdir(destDir, os.ModePerm)
@@ -548,7 +555,8 @@ func checkAndMkDir(destDir string) string {
 		}
 	}
 
-	destDir = destDir + "/" + strconv.Itoa(int(time.Now().Unix()))
+	destDir = destDir + "/" + get_true_filename(url)[0:len(get_true_filename(url)) -1] + "/" // + strconv.Itoa(int(time.Now().Unix()))
+	fmt.Println(destDir)
 	if !exist(destDir) {
 		err := os.Mkdir(destDir, os.ModePerm)
 		if err != nil {
