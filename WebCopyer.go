@@ -405,7 +405,7 @@ func get_destdir_and_filetype(url string) (string, string) {
 		return "unexcept", "unexcept"
 	}
 
-	dir = dir + "\\theme\\" + filetype + "\\"
+	dir = dir + "/theme/" + filetype + "/"
 	return dir, filetype
 }
 
@@ -548,7 +548,7 @@ func checkAndMkDir(destDir string) string {
 		}
 	}
 
-	destDir = destDir + "\\" + strconv.Itoa(int(time.Now().Unix()))
+	destDir = destDir + "/" + strconv.Itoa(int(time.Now().Unix()))
 	if !exist(destDir) {
 		err := os.Mkdir(destDir, os.ModePerm)
 		if err != nil {
@@ -556,22 +556,22 @@ func checkAndMkDir(destDir string) string {
 		}
 	}
 
-	if !exist(destDir + "\\theme\\js") {
-		err := os.MkdirAll(destDir+"\\theme\\js", os.ModePerm)
+	if !exist(destDir + "/theme/js") {
+		err := os.MkdirAll(destDir+"/theme/js", os.ModePerm)
 		if err != nil {
 			log.Fatal("无法创建目录！")
 		}
 	}
 
-	if !exist(destDir + "\\theme\\images") {
-		err := os.MkdirAll(destDir+"\\theme\\images", os.ModePerm)
+	if !exist(destDir + "/theme/images") {
+		err := os.MkdirAll(destDir+"/theme/images", os.ModePerm)
 		if err != nil {
 			log.Fatal("无法创建目录！")
 		}
 	}
 
-	if !exist(destDir + "\\theme\\css") {
-		err := os.MkdirAll(destDir+"\\theme\\css", os.ModePerm)
+	if !exist(destDir + "/theme/css") {
+		err := os.MkdirAll(destDir+"/theme/css", os.ModePerm)
 		if err != nil {
 			log.Fatal("无法创建目录！")
 		}
@@ -602,16 +602,16 @@ func fixResPath(path string) string {
 
 	fixed := path
 
-	if path == "" || path == "\\" {
-		fixed = "\\"
+	if path == "" || path == "/" {
+		fixed = "/"
 	} else {
-		if !strings.HasSuffix(path, "\\") {
-			fixed = fixed + "\\"
+		if !strings.HasSuffix(path, "/") {
+			fixed = fixed + "/"
 		}
 	}
 
-	if !strings.HasPrefix(path, "\\") {
-		fixed = "\\" + path
+	if !strings.HasPrefix(path, "/") {
+		fixed = "/" + path
 	}
 
 	return fixed
