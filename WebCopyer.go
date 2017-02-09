@@ -12,7 +12,7 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
-//	"time"
+	//	"time"
 )
 
 /*
@@ -103,10 +103,10 @@ func init() {
 	arg2 = flag.Arg(2)
 
 	url := flag.Arg(0)
-	if method ==  "getLocal" {
+	if method == "getLocal" {
 		url = flag.Arg(2)
 	}
-	if method ==  "get" {
+	if method == "get" {
 		url = flag.Arg(1)
 	}
 	log.SetFlags(log.Ltime)
@@ -132,7 +132,7 @@ func init() {
 	extArray = arrayMerge(extArray, js_ext)
 	extArray = arrayMerge(extArray, other_ext)
 
-	destDir = checkAndMkDir(destDir,url)
+	destDir = checkAndMkDir(destDir, url)
 
 }
 
@@ -429,22 +429,25 @@ func down_resource(url string, destDir string) {
 	if strings.HasPrefix(fixed_url, "http") || strings.HasPrefix(fixed_url, "https") {
 		resp, err := http.Get(fixed_url)
 		if err != nil {
+			fmt.Println(">>>>>>>>>>>>>>>>>>以下资源获取出错，跳过ing<<<<<<<<<<<<<<<<<<<<<<")
 			fmt.Println(err)
-			os.Exit(0)
-		}
+			fmt.Println("_______________________________________________________________")
+			//os.Exit(0)
+		} else {
 
-		out, create_err := os.Create(fullfilename)
-		if create_err != nil {
-			fmt.Println(create_err)
-			os.Exit(0)
+			out, create_err := os.Create(fullfilename)
+			if create_err != nil {
+				fmt.Println(create_err)
+				os.Exit(0)
+			}
+			_, copy_err := io.Copy(out, resp.Body)
+			if copy_err != nil {
+				fmt.Println(copy_err)
+				os.Exit(0)
+			}
+			out.Close()
+			resp.Body.Close()
 		}
-		_, copy_err := io.Copy(out, resp.Body)
-		if copy_err != nil {
-			fmt.Println(copy_err)
-			os.Exit(0)
-		}
-		out.Close()
-		resp.Body.Close()
 	}
 	fmt.Println()
 }
@@ -546,7 +549,7 @@ func arrayMerge(old []string, other []string) []string {
 	return old
 }
 
-func checkAndMkDir(destDir string,url string) string {
+func checkAndMkDir(destDir string, url string) string {
 	//判断destDir是否存在 不存在的话创建 失败的话报错终止
 	if !exist(destDir) {
 		err := os.Mkdir(destDir, os.ModePerm)
@@ -555,7 +558,7 @@ func checkAndMkDir(destDir string,url string) string {
 		}
 	}
 
-	destDir = destDir + "/" + get_true_filename(url)[0:len(get_true_filename(url)) -1] + "/" // + strconv.Itoa(int(time.Now().Unix()))
+	destDir = destDir + "/" + get_true_filename(url)[0:len(get_true_filename(url))-1] + "/" // + strconv.Itoa(int(time.Now().Unix()))
 	fmt.Println(destDir)
 	if !exist(destDir) {
 		err := os.Mkdir(destDir, os.ModePerm)
